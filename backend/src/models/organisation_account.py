@@ -1,0 +1,41 @@
+"""organisational_account.py
+
+Keyword arguments:
+argument -- description
+Return: CRUD resources on organisational accounts
+"""
+
+from uuid import uuid4
+
+from sqlalchemy import UUID
+
+from . import db
+from .abc import BaseModel, MetaBaseModel
+
+try:
+    from ..utils import NetworkTime
+except ImportError:
+    from utils import NetworkTime
+
+nt_time = NetworkTime.network_time()
+
+
+class OrganisationalAccountModel(db.Model, BaseModel, metaclass=MetaBaseModel):
+    """ This class defines the organisational account model """
+
+    __tablename__ = "organisational_accounts"
+
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid4, unique=True)  # noqa
+    bank_name = db.Column(db.String(), nullable=False)
+    bank_code = db.Column(db.String(), nullable=False)
+    account_name = db.Column(db.String(), nullable=False)
+    account_number = db.Column(db.Integer(), nullable=False)
+    created_at = db.Column(db.DateTime(), nullable=False, default=nt_time)
+    updated_at = db.Column(db.DateTime(), nullable=True, onupdate=nt_time)
+    is_deleted = db.Column(db.Boolean(), nullable=False, default=False)
+    deleted_at = db.Column(db.DateTime(), nullable=True)
+
+    # foreign keys
+
+    organisation = db.Column(
+        UUID(as_uuid=True), db.ForeignKey('organisations.id'), nullable=False)
