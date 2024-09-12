@@ -1,11 +1,9 @@
-"""levy_payment.py
+"""loan_approval.py
 
 Keyword arguments:
 argument -- description
 Return: return_description
 """
-
-import secrets
 
 from flask import jsonify
 from flask_restful import Resource
@@ -16,85 +14,68 @@ from sqlalchemy.exc import (DataError, IntegrityError, InterfaceError,
 from werkzeug.exceptions import BadRequest, MethodNotAllowed, NotFound
 
 try:
-    from ..models import LevyPaymentModel, OrganisationalLevyModel
+    from ..models import LoanApprovalModel, LoanModel
     from ..utils.parse_params import parse_params
 except ImportError:
-    from models import LevyPaymentModel, OrganisationalLevyModel
+    from models import LoanApprovalModel, LoanModel
     from utils.parse_params import parse_params
 
 
-class LevyPaymentResource(Resource):
-    """ The class is concern with the levy payment CRUD API  """
+class LoanApprovalResource(Resource):
+    """ The class is concern with the loan approval CRUD API  """
 
     @staticmethod
     @parse_params(
-        Argument("amount", location="json", required=True,
-                 help="The amount paid for the levy."),
-        Argument("levy", location="json", required=True,
-                 help="The levy the payment is slated for."),
+        Argument("loan", location="json", required=True,
+                 help="The loan the payment is slated for."),
         Argument("member", location="json", required=True,
-                 help="The member who made the payment."),
+                 help="The member who approve the loan."),
         Argument("organisation", location="json", required=True,
-                 help="The organisation the levy belong to."),
+                 help="The organisation the loan belong to."),
     )
-    def create(amount, levy, member, organisation):
-        """ The function enables the creation of a levy payment"""
+    def create(loan, member, organisation):
+        """ The function enables the creation of a loan approval"""
 
         try:
 
-            levy_id = OrganisationalLevyModel.query.filter_by(
-                id=levy).first()
+            loan_id = LoanModel.query.filter_by(
+                id=loan).first()
 
-            all_levy_payment = LevyPaymentModel.query.all()
+            all_loan_approval = LoanApprovalModel.query.all()
 
-            if not levy_id:
+            if not loan_id:
                 return jsonify({
                     'code': 404,
                     'code_status': "not found",
-                    'code_message': f"no levy id {levy.id} was found",
+                    'code_message': f"no loan id {loan.id} was found",
                 }), 404
 
-            if int(amount) != int(levy_id.amount):
-                return jsonify({
-                    'code': 404,
-                    'code_status': "data mis-matched",
-                    'code_message': "the amount you are inputting is wrong",
-                }), 404
+            for loan_approval in all_loan_approval:
 
-            reference = secrets.token_urlsafe(32)
-
-            for levy_payment in all_levy_payment:
-                while levy_payment.reference == reference:
-                    reference = secrets.token_urlsafe(32)
-
-                if str(levy_payment.member) == str(member) and str(
-                        levy_payment.levy) == str(levy):
+                if str(loan_approval.member) == str(member) and str(
+                        loan_approval.loan) == str(loan):
                     return jsonify({
                         'code': 409,
-                        'code_status': "payment conflict",
-                        'code_message': f"{member} has already made payment",
+                        'code_status': "approval conflict",
+                        'code_message': f"{member} has already approve this loan",  # noqa
                     }), 409
 
-            new_levy_payment = LevyPaymentModel(
-                amount=amount,
-                reference=reference,
-                levy=levy,
+            new_loan_approval = LoanApprovalModel(
+                loan=loan,
                 member=member,
-                organisation=organisation,
+                organisation=organisation
             )
-            new_levy_payment.save()
+            new_loan_approval.save()
 
             return jsonify({
                 'code': 201,
                 'code_status': "created successfully",
                 'data': {
-                    'id': new_levy_payment.id,
-                    'amount': new_levy_payment.amount,
-                    'reference': new_levy_payment.reference,
-                    'levy': new_levy_payment.levy,
-                    'member': new_levy_payment.member,
-                    'organisation': new_levy_payment.organisation,
-                    'created_at': new_levy_payment.created_at,
+                    'id': new_loan_approval.id,
+                    'loan': new_loan_approval.loan,
+                    'member': new_loan_approval.member,
+                    'organisation': new_loan_approval.organisation,
+                    'created_at': new_loan_approval.created_at,
                 }
             }), 201
 
@@ -136,36 +117,34 @@ class LevyPaymentResource(Resource):
 
     @staticmethod
     def read_all():
-        """ The function enables the reading of all levy payments"""
+        """ The function enables the reading of all loan approvals"""
 
         try:
-            levy_payments = LevyPaymentModel.query.all()
+            loan_approvals = LoanApprovalModel.query.all()
 
-            if not levy_payments:
+            if not loan_approvals:
                 return jsonify({
                     'code': 404,
                     'code_status': "not found",
-                    'code_message': "no levy payments found",
+                    'code_message': "no loan approvals found",
                 }), 404
 
-            levy_payments_list = []
+            loan_approvals_list = []
 
-            for levy_payment in levy_payments:
-                levy_payments_list.append({
-                    'id': levy_payment.id,
-                    'amount': levy_payment.amount,
-                    'reference': levy_payment.reference,
-                    'created_at': levy_payment.created_at,
-                    'updated_at': levy_payment.updated_at,
-                    'levy': levy_payment.levy,
-                    'member': levy_payment.member,
-                    'organisation': levy_payment.organisation,
+            for loan_approval in loan_approvals:
+                loan_approvals_list.append({
+                    'id': loan_approval.id,
+                    'created_at': loan_approval.created_at,
+                    'updated_at': loan_approval.updated_at,
+                    'loan': loan_approval.loan,
+                    'member': loan_approval.member,
+                    'organisation': loan_approval.organisation,
                 })
 
             return jsonify({
                 'code': 200,
                 'code_status': "retrieved successfully",
-                'data': levy_payments_list,
+                'data': loan_approvals_list,
             }), 200
 
         except (InterfaceError, OperationalError, PendingRollbackError,
@@ -192,31 +171,29 @@ class LevyPaymentResource(Resource):
 
     @staticmethod
     def read_one(id=None):
-        """ The function enables the reading of one levy payment by id"""  # noqa
+        """ The function enables the reading of one loan approval by id"""  # noqa
 
         try:
-            levy_payment = LevyPaymentModel.query.filter_by(
+            loan_approval = LoanApprovalModel.query.filter_by(
                 id=id).first()
 
-            if not levy_payment:
+            if not loan_approval:
                 return jsonify({
                     'code': 404,
                     'code_status': "not found",
-                    'code_message': f"no levy payment with id {id} was found",  # noqa
+                    'code_message': f"no loan approval with id {id} was found",  # noqa
                 }), 404
 
             return jsonify({
                 'code': 200,
                 'code_status': "retrieved successfully",
                 'data': {
-                    'id': levy_payment.id,
-                    'amount': levy_payment.amount,
-                    'reference': levy_payment.reference,
-                    'created_at': levy_payment.created_at,
-                    'updated_at': levy_payment.updated_at,
-                    'levy': levy_payment.levy,
-                    'member': levy_payment.member,
-                    'organisation': levy_payment.organisation,
+                    'id': loan_approval.id,
+                    'created_at': loan_approval.created_at,
+                    'updated_at': loan_approval.updated_at,
+                    'loan': loan_approval.loan,
+                    'member': loan_approval.member,
+                    'organisation': loan_approval.organisation,
                 },
             }), 200
 
@@ -242,26 +219,26 @@ class LevyPaymentResource(Resource):
                 'code_message': "improper url or method used",
             }), 405
 
-    @ staticmethod
+    @staticmethod
     def delete_one(id=None):
-        """ The function enables the deletion of one levy payment by id"""  # noqa
+        """ The function enables the deletion of one loan approval by id"""  # noqa
 
         try:
-            levy_payment = LevyPaymentModel.query.filter_by(id=id).first()  # noqa
+            loan_approval = LoanApprovalModel.query.filter_by(id=id).first()  # noqa
 
-            if not levy_payment:
+            if not loan_approval:
                 return jsonify({
                     'code': 404,
                     'code_status': "not found",
-                    'code_message': f"no levy payment with id {id} was found",  # noqa
+                    'code_message': f"no loan approval with id {id} was found",  # noqa
                 }), 404
 
-            levy_payment.delete()
+            loan_approval.delete()
 
             return jsonify({
                 'code': 200,
                 'code_status': "deleted successfully",
-                'code_message': f"{levy_payment.id} was deleted successfully",  # noqa
+                'code_message': f"{loan_approval.id} was deleted successfully",  # noqa
             }), 200
 
         except (InterfaceError, OperationalError, PendingRollbackError,

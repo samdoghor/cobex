@@ -1,5 +1,7 @@
 from .event import EventResource
 from .levy_payment import LevyPaymentResource
+from .loan_approval import LoanApprovalResource
+from .loan_payment import LoanPaymentResource
 from .loan import LoanResource
 from .member import MemberResource
 from .organisation import OrganisationResource

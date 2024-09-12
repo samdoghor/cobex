@@ -1,5 +1,7 @@
 from .event import EventBlueprint
 from .levy_payment import LevyPaymentBlueprint
+from .loan_approval import LoanApprovalBlueprint
+from .loan_payment import LoanPaymentBlueprint
 from .loan import LoanBlueprint
 from .member import MemberBlueprint
 from .organisation import OrganisatonBlueprint
