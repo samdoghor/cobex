@@ -40,3 +40,5 @@ class EventModel(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     organisation = db.Column(
         UUID(as_uuid=True), db.ForeignKey('organisations.id'), nullable=False)
+    member = db.Column(
+        UUID(as_uuid=True), db.ForeignKey('members.id'), nullable=False)

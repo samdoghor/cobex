@@ -1,4 +1,4 @@
-"""main.py
+"""server.py
 
 Keyword arguments:
 argument -- description
@@ -34,7 +34,7 @@ migrate = Migrate(server, db)
 for blueprint in vars(routes).values():
     if isinstance(blueprint, Blueprint):
         server.register_blueprint(
-            blueprint, url_prefix=config.application_root)
+            blueprint, url_prefix=config.application_api_root)
 
 if __name__ == "__main__":
     server.run(host=config.application_host,

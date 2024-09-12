@@ -26,11 +26,11 @@ class LoanModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = "loans"
 
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid4, unique=True)  # noqa
-    amount = db.Column(db.String(), nullable=False)
+    amount = db.Column(db.Integer(), nullable=False)
     due_date = db.Column(db.DateTime(), nullable=False)
-    interest_at = db.Column(db.Text, nullable=False)
-    image = db.Column(db.String(), nullable=True)
-    image_id = db.Column(db.String(), nullable=True)
+    interest_at = db.Column(db.Float(), nullable=False)
+    interest_amount = db.Column(db.Float(), nullable=False)
+    total_amount = db.Column(db.Float(), nullable=False)
     created_at = db.Column(db.DateTime(), nullable=False, default=nt_time)
     updated_at = db.Column(db.DateTime(), nullable=True, onupdate=nt_time)
     is_deleted = db.Column(db.Boolean(), nullable=False, default=False)

@@ -32,8 +32,6 @@ class OrganisationalRoleModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     role_position = db.Column(db.Integer(), nullable=False)
     created_at = db.Column(db.DateTime(), nullable=False, default=nt_time)
     updated_at = db.Column(db.DateTime(), nullable=True, onupdate=nt_time)
-    is_deleted = db.Column(db.Boolean(), nullable=False, default=False)
-    deleted_at = db.Column(db.DateTime(), nullable=True)
 
     # foreign keys
 
