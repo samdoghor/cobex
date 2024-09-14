@@ -1,3 +1,4 @@
+from .authentication import AuthenticationBlueprint
 from .event import EventBlueprint
 from .levy_payment import LevyPaymentBlueprint
 from .loan_approval import LoanApprovalBlueprint

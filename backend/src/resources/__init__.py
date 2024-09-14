@@ -1,3 +1,4 @@
+from .authentication import AuthenticationResource
 from .event import EventResource
 from .levy_payment import LevyPaymentResource
 from .loan_approval import LoanApprovalResource

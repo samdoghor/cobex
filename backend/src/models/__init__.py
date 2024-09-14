@@ -7,6 +7,7 @@ from .levy_payment import LevyPaymentModel
 from .loan_approval import LoanApprovalModel
 from .loan_payment import LoanPaymentModel
 from .loan import LoanModel
+from .login_log import LoginLogModel
 from .member_social import MemberSocialModel
 from .member import MemberModel
 from .organisation_account import OrganisationAccountModel
