@@ -70,8 +70,8 @@ class OrganisationModel(db.Model, BaseModel, metaclass=MetaBaseModel):
         'MemberModel', backref='organisations', lazy=True,
         cascade='all, delete-orphan')
 
-    organisational_accounts = db.relationship(
-        'OrganisationalAccountModel', backref='organisations', lazy=True,
+    organisation_accounts = db.relationship(
+        'OrganisationAccountModel', backref='organisations', lazy=True,
         cascade='all, delete-orphan')
 
     organisational_levies = db.relationship(

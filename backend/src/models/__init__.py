@@ -9,7 +9,7 @@ from .loan_payment import LoanPaymentModel
 from .loan import LoanModel
 from .member_social import MemberSocialModel
 from .member import MemberModel
-from .organisation_account import OrganisationalAccountModel
+from .organisation_account import OrganisationAccountModel
 from .organisation_social import OrganisationSocialModel
 from .organisation import OrganisationModel
 from .organisational_role import OrganisationalRoleModel

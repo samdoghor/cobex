@@ -1,8 +1,8 @@
 """levy_payment.py
 
 Keyword arguments:
-argument -- create, reall_all, read_one, update, delete
-Return: create, reall_all, read_one, update, delete
+argument -- create, reall_all, read_one, delete
+Return: create, reall_all, read_one, delete
 """
 
 from flask import Blueprint

@@ -1,4 +1,4 @@
-"""organisational_account.py
+"""organisation_account.py
 
 Keyword arguments:
 argument -- description
@@ -20,10 +20,10 @@ except ImportError:
 nt_time = NetworkTime.network_time()
 
 
-class OrganisationalAccountModel(db.Model, BaseModel, metaclass=MetaBaseModel):
-    """ This class defines the organisational account model """
+class OrganisationAccountModel(db.Model, BaseModel, metaclass=MetaBaseModel):
+    """ This class defines the organisation account model """
 
-    __tablename__ = "organisational_accounts"
+    __tablename__ = "organisation_accounts"
 
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid4, unique=True)  # noqa
     bank_name = db.Column(db.String(), nullable=False)

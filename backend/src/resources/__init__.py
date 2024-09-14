@@ -3,7 +3,10 @@ from .levy_payment import LevyPaymentResource
 from .loan_approval import LoanApprovalResource
 from .loan_payment import LoanPaymentResource
 from .loan import LoanResource
+from .member_social import MemberSocialResource
 from .member import MemberResource
+from .organisation_account import OrganisationAccountResource
+from .organisation_social import OrganisationSocialResource
 from .organisation import OrganisationResource
 from .organisational_role import OrganisationalRoleResource
 from .organisional_levy import OrganisationalLevyResource
