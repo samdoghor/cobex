@@ -38,7 +38,7 @@ class OrganisationalRoleResource(Resource):
                  help="The organisation the organisational role belong to."),
     )
     def create(role, is_top_role, is_member_role, role_position, organisation):
-        """ The function enables the creation of an member"""
+        """ The function enables the creation of an organisational role"""
 
         try:
             organisational_role = OrganisationalRoleModel.query.filter_by(

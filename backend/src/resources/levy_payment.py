@@ -51,7 +51,7 @@ class LevyPaymentResource(Resource):
                 return jsonify({
                     'code': 404,
                     'code_status': "not found",
-                    'code_message': f"no levy id {levy} was found",
+                    'code_message': f"no levy id {levy.id} was found",
                 }), 404
 
             if int(amount) != int(levy_id.amount):
@@ -218,72 +218,6 @@ class LevyPaymentResource(Resource):
                     'member': levy_payment.member,
                     'organisation': levy_payment.organisation,
                 },
-            }), 200
-
-        except (InterfaceError, OperationalError, PendingRollbackError,
-                ProgrammingError):
-            return jsonify({
-                'code': 500,
-                'code_status': "internal error",
-                'code_message': "database connection error",
-            }), 500
-
-        except (DataError, NotFound):
-            return jsonify({
-                'code': 404,
-                'code_status': "not found",
-                'code_message': "data is missing or wrong",
-            }), 404
-
-        except MethodNotAllowed:
-            return jsonify({
-                'code': 405,
-                'code_status': "method not allowed",
-                'code_message': "improper url or method used",
-            }), 405
-
-    @staticmethod
-    @parse_params(
-        Argument("amount", location="json", required=True,
-                 help="The amount paid for the levy."),
-        Argument("reference", location="json", required=True,
-                 help="The reference number for the payment."),
-    )
-    def update_one(id=None, **args):
-        """ The function enables the updating of one levy payment by id"""  # noqa
-
-        try:
-            levy_payment = LevyPaymentModel.query.filter_by(
-                id=id).first()
-
-            if not levy_payment:
-                return jsonify({
-                    'code': 404,
-                    'code_status': "not found",
-                    'code_message': f"no levy payment with id {id} was found",  # noqa
-                }), 404
-
-            if 'amount' in args and args['amount'] is not None:
-                levy_payment.amount = args['amount']
-
-            if 'reference' in args and args['reference'] is not None:
-                levy_payment.reference = args['reference']
-
-            levy_payment.save()
-
-            return jsonify({
-                'code': 200,
-                'code_status': "updated successfully",
-                'data': {
-                    'id': levy_payment.id,
-                    'amount': levy_payment.amount,
-                    'reference': levy_payment.reference,
-                    'created_at': levy_payment.created_at,
-                    'updated_at': levy_payment.updated_at,
-                    'levy': levy_payment.levy,
-                    'member': levy_payment.member,
-                    'organisation': levy_payment.organisation,
-                }
             }), 200
 
         except (InterfaceError, OperationalError, PendingRollbackError,

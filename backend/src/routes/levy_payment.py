@@ -1,8 +1,8 @@
-"""organisational_levy.py
+"""levy_payment.py
 
 Keyword arguments:
-argument -- create, reall_all, read_one, update, delete
-Return: create, reall_all, read_one, update, delete
+argument -- create, reall_all, read_one, delete
+Return: create, reall_all, read_one, delete
 """
 
 from flask import Blueprint
@@ -24,9 +24,6 @@ LevyPaymentBlueprint.route(
 LevyPaymentBlueprint.route(
     "/levy-payments/<uuid:id>",
     methods=['GET'])(LevyPaymentResource.read_one)
-LevyPaymentBlueprint.route(
-    "/levy-payments/<uuid:id>",
-    methods=['PUT'])(LevyPaymentResource.update_one)
 LevyPaymentBlueprint.route(
     "/levy-payments/<uuid:id>",
     methods=['DELETE'])(LevyPaymentResource.delete_one)

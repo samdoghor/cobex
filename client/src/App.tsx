@@ -1,6 +1,8 @@
+import Index from "./pages/Index"
+
 const App = () => {
     return (
-        <><div>App</div></>
+        <><Index /></>
     )
 }
 
