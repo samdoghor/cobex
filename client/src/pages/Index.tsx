@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import AnimatedGridPattern from "../components/magicui/animated-grid-pattern"
@@ -29,11 +30,8 @@ const Index = () => {
                             className="absolute inset-0 translate-x-1.5 translate-y-1.5 bg-themeThree transition-transform group-hover:translate-x-0 group-hover:translate-y-0 rounded-md"
                         ></span>
 
-                        <span
-                            className="relative inline-block border-2 border-white rounded-md px-8 py-3 text-sm font-bold uppercase tracking-widest text-white group-active:text-opacity-75"
-                        >
-                            Get Started
-                        </span>
+
+                        <Link className="relative inline-block border-2 border-white rounded-md px-8 py-3 text-sm font-bold uppercase tracking-widest text-white group-active:text-opacity-75" to="/auth/register"> Get Started </Link>
                     </a>
                     <div className="bg-stone-950 min-h-screen">
                         <div className="flex flex-col items-center justify-center py-20">
@@ -55,7 +53,7 @@ const Index = () => {
                     repeatDelay={1}
                     className={cn(
                         "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-                        "inset-x-0 inset-y-[-30%] skew-y-12 h-[200%] mt-32 w-full opacity-40",
+                        "inset-x-0 inset-y-[-30%] skew-y-12 h-[200%] mt-32 w-full opacity-50",
                     )}
                 />
             </div >
@@ -119,13 +117,11 @@ const Index = () => {
                         <p className="mt-3 text-lg text-gray-400">Streamline payments, track contributions, and enhance transparency effortlessly. Cobex automates financial processes, providing real-time updates and detailed reports for better decision-making.</p>
 
                         <div className="mt-7 grid gap-3 w-full sm:inline-flex">
-                            <a className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-themeThree text-white hover:bg-themeTwo focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">
-                                Get started
+                            <Link className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-themeThree text-white hover:bg-themeTwo focus:outline-none focus:bg-themeTwo disabled:opacity-50 disabled:pointer-events-none" to="/auth/register">
+                                Get Started
                                 <svg className="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-                            </a>
-                            <a className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-                                Contact support team
-                            </a>
+                            </Link>
+                            <Link className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" to="/contact"> Contact support team </Link>
                         </div>
                     </div>
 
@@ -153,6 +149,72 @@ const Index = () => {
                                 <rect x="507" y="124" width="49" height="24" fill="currentColor" />
                                 <rect x="531" y="49" width="99" height="99" fill="currentColor" />
                             </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="faq" className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto bg-neutral-900 min-h-screen">
+                <div className="max-w-2xl mx-auto text-center mb-10 lg:mb-14">
+                    <h2 className="text-2xl font-bold md:text-3xl md:leading-tight text-gray-400">
+                        Frequently Asked Questions
+                    </h2>
+                </div>
+
+                <div className="max-w-5xl mx-auto">
+                    <div className="grid sm:grid-cols-2 gap-6 md:gap-12">
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-400">
+                                Can I cancel at anytime?
+                            </h3>
+                            <p className="mt-2 text-gray-300">
+                                Yes, you can cancel anytime no questions are asked while you cancel but we would highly appreciate if you will give us some feedback.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-400">
+                                My team has credits. How do we use them?
+                            </h3>
+                            <p className="mt-2 text-gray-300">
+                                Once your team signs up for a subscription plan. This is where we sit down, grab a cup of coffee and dial in the details.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-400">
+                                How does Preline's pricing work?
+                            </h3>
+                            <p className="mt-2 text-gray-300">
+                                Our subscriptions are tiered. Understanding the task at hand and ironing out the wrinkles is key.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-400">
+                                How secure is Cobex?
+                            </h3>
+                            <p className="mt-2 text-gray-300">
+                                Protecting the data you trust to Cobex is our first priority. This part is really crucial in keeping the project in line to completion.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-400">
+                                Do you offer discounts?
+                            </h3>
+                            <p className="mt-2 text-gray-300">
+                                We've built in discounts at each tier for teams. The time has come to bring those ideas and plans to life.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-400">
+                                What is your refund policy?
+                            </h3>
+                            <p className="mt-2 text-gray-300">
+                                We offer refunds. We aim high at being focused on building relationships with our clients and community.
+                            </p>
                         </div>
                     </div>
                 </div>

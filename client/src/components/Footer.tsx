@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 
 const Footer = () => {
@@ -8,7 +9,7 @@ const Footer = () => {
                     <img
                         src="/assets/images/footer.jpg"
                         alt=""
-                        className="absolute inset-0 h-full w-full object-cover grayscale"
+                        className="absolute inset-0 h-full w-full object-cover grayscale brightness-50"
                     />
                 </div>
 
@@ -135,9 +136,7 @@ const Footer = () => {
 
                                 <ul className="mt-6 space-y-4 text-sm">
                                     <li>
-                                        <a href="#" className="text-gray-400 transition hover:opacity-75 dark:text-gray-200">
-                                            How it Works
-                                        </a>
+                                        <Link className="text-gray-400 transition hover:opacity-75 dark:text-gray-200" to="/learn"> Learn More </Link>
                                     </li>
 
                                     <li>
@@ -147,9 +146,7 @@ const Footer = () => {
                                     </li>
 
                                     <li>
-                                        <a href="#" className="text-gray-400 transition hover:opacity-75 dark:text-gray-200">
-                                            Customer Support
-                                        </a>
+                                        <Link className="text-gray-400 transition hover:opacity-75 dark:text-gray-200" to="/contact"> Customer Support </Link>
                                     </li>
                                 </ul>
                             </div>
