@@ -4,11 +4,16 @@ import Learn from "../pages/Learn";
 import Contact from "../pages/Contact";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
+import Cooperatives from "../pages/Cooperatives";
 
 const routers = createBrowserRouter([
     {
         path: "/",
         element: <Index />,
+    },
+    {
+        path: "/cooperatives",
+        element: <Cooperatives />,
     },
     {
         path: "/learn",

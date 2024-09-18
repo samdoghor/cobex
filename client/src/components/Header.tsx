@@ -17,12 +17,7 @@ const Header = () => {
                             <nav aria-label="Global">
                                 <ul className="flex items-center gap-6 text-sm">
                                     <li>
-                                        <a
-                                            className="text-gray-200 transition hover:text-gray-500/75"
-                                            href="#"
-                                        >
-                                            Cooperatives
-                                        </a>
+                                        <Link className="text-gray-200 transition hover:text-gray-500/75" to="/cooperatives"> Cooperatives </Link>
                                     </li>
 
                                     <li>
