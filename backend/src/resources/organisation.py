@@ -5,7 +5,7 @@ argument -- description
 Return: return_description
 """
 import secrets
-from datetime import timedelta
+# from datetime import timedelta
 from flask import jsonify
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
@@ -17,11 +17,11 @@ from werkzeug.exceptions import BadRequest, MethodNotAllowed, NotFound
 try:
     from ..models import OrganisationModel, MemberModel
     from ..utils.parse_params import parse_params
-    from ..utils import NetworkTime
+    # from ..utils import NetworkTime
 except ImportError:
     from models import OrganisationModel, MemberModel
     from utils.parse_params import parse_params
-    from utils import NetworkTime
+    # from utils import NetworkTime
 
 
 class OrganisationResource(Resource):
@@ -466,28 +466,30 @@ class OrganisationResource(Resource):
                     'code_message': f"no organisation with id {id} was found",
                 }), 404
 
-            nt_time = NetworkTime.network_time()
+            organisation.delete()
 
-            if organisation.is_deleted is not None:
-                deletion_date = organisation.deleted_at + timedelta(days=30)
+            # nt_time = NetworkTime.network_time()
 
-            if organisation.is_deleted is True:
-                return jsonify({
-                    'code': 409,
-                    'code_status': "conflict",
-                    'code_message': f"{organisation.full_name} profile is already set for deletion",  # noqa
-                    'data': {
-                        'is_deleted': organisation.is_deleted,
-                        'deleted_at': organisation.deleted_at,
-                        'permanent_deletion': deletion_date
-                    }
-                }), 409
+            # if organisation.is_deleted is not None and organisation.deleted_at is not None:  # noqa
+            #     deletion_date = organisation.deleted_at + timedelta(days=30)
 
-            organisation.is_deleted = True
-            organisation.deleted_at = nt_time
-            organisation.save()
+            # if organisation.is_deleted is True:
+            #     return jsonify({
+            #         'code': 409,
+            #         'code_status': "conflict",
+            #         'code_message': f"{organisation.full_name} profile is already set for deletion",  # noqa
+            #         'data': {
+            #             'is_deleted': organisation.is_deleted,
+            #             'deleted_at': organisation.deleted_at,
+            #             'permanent_deletion': deletion_date
+            #         }
+            #     }), 409
 
-            deletion_date = organisation.deleted_at + timedelta(days=30)
+            # organisation.is_deleted = True
+            # organisation.deleted_at = nt_time
+            # organisation.save()
+
+            # deletion_date = organisation.deleted_at + timedelta(days=30)
 
             return jsonify({
                 'code': 200,
@@ -496,7 +498,7 @@ class OrganisationResource(Resource):
                 'data': {
                     'is_deleted': organisation.is_deleted,
                     'deleted_at': organisation.deleted_at,
-                    'permanent_deletion': deletion_date
+                    # 'permanent_deletion': deletion_date
                 }
             }), 200
 

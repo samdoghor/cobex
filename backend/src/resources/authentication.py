@@ -81,6 +81,7 @@ class AuthenticationResource(Resource):
                     current_app.session_interface.regenerate(session)
                     session['id'] = member.id
                     session['email'] = member.email
+                    session_id = session.sid
 
                     access_token = Authorisation.auth_encoder(
                         member.id, member.first_name, member.last_name)
@@ -92,7 +93,8 @@ class AuthenticationResource(Resource):
                         'data': {
                             'id': member.id,
                             'email': member.email,
-                            'access_token': access_token
+                            'access_token': access_token,
+                            'session_id': session_id,
                         }
                     }), 200
 
