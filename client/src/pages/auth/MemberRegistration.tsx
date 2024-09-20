@@ -1,15 +1,16 @@
 import { useFormik } from 'formik';
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Toaster from "../../components/Toaster";
-import { useMemberLoginMutation } from "../../hooks/useMember";
 import { HiCheck, HiX } from "react-icons/hi";
+import { useMemberRegistrationMutation } from "../../hooks/useMember";
 import Cookies from 'js-cookie';
 
-const Login = () => {
+const MemberRegistration = () => {
+
     const navigate = useNavigate();
     const [unfinishRegShowToast, setUnfinishRegShowToast] = useState(false);
     const [loginShowToast, setLoginShowToast] = useState(false);
@@ -30,18 +31,28 @@ const Login = () => {
         }
     }, [navigate]);
 
-    const { mutate, isError, isSuccess, error, data } = useMemberLoginMutation();
+    const { mutate, isError, isSuccess, error, data } = useMemberRegistrationMutation();
     const [showToast, setShowToast] = useState(false);
     const [errorShowToast, errorSetShowToast] = useState(false);
 
+    const organisation = Cookies.get('Cobex-ORD');
+    const organisational_role = Cookies.get('Cobex-ORRD');
+
     const formik = useFormik({
         initialValues: {
+            first_name: '',
+            last_name: '',
             email: '',
             password: '',
+            organisation: organisation,
+            organisational_role: organisational_role,
         },
         validationSchema: Yup.object({
+            first_name: Yup.string().required('First Name is required'),
+            last_name: Yup.string().required('Last Name is required'),
             email: Yup.string().email('Invalid email address').required('Email is required'),
             password: Yup.string().required('Password is required'),
+
         }),
         onSubmit: values => {
             mutate(values);
@@ -55,22 +66,10 @@ const Login = () => {
                 setShowToast(false);
             }, 3000);
             setTimeout(() => {
-                navigate('/dashboard');
+                navigate('/auth/login');
             }, 3500);
-            Cookies.set('Cobex-UD', data?.data?.access_token, {
-                // HttpOnly: true,
-                expires: 7,
-                secure: true,
-                sameSite: 'strict',
-                path: '/',
-            });
-            Cookies.set('Cobex-SDI', data?.data?.session_id, {
-                // HttpOnly: true,
-                expires: 7,
-                secure: true,
-                sameSite: 'strict',
-                path: '/',
-            });
+            Cookies.remove('Cobex-ORD')
+            Cookies.remove('Cobex-ORRD')
         }
 
         if (isError) {
@@ -80,65 +79,70 @@ const Login = () => {
             }, 3000);
         }
     }, [isSuccess, isError, data, error, navigate]);
-
     return (
         <>
             <Header />
             <div className="bg-stone-950 min-h-screen py-20 flex justify-center items-center">
                 <div className="border border-gray-200 rounded-xl shadow-sm w-[40%]">
                     <div className="p-4 sm:p-7">
-                        <div className="text-center">
-                            <h1 className="block text-2xl font-bold text-gray-400">Sign in</h1>
-                            <p className="mt-2 text-sm text-gray-100">
-                                Don't have an account yet?
-                                <Link className="text-gray-100 decoration-2 hover:underline focus:outline-none focus:underline font-medium ps-2" to="/auth/register"> Sign up here </Link>
-                            </p>
-                        </div>
-
                         <div className="mt-5">
+                            <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6">President Data</div>
+
                             <form onSubmit={formik.handleSubmit}>
-                                <div className="grid gap-y-4">
+                                <div className="grid gap-y-4 pb-4">
                                     <div>
-                                        <label htmlFor="email" className="block text-sm mb-2 text-gray-100">Email address</label>
+                                        <label htmlFor="first_name" className="block text-sm mb-2 text-gray-100">First Name</label>
                                         <div className="relative">
-                                            <input type="email" id="email" name="email" className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="email-error" onChange={formik.handleChange}
-                                                value={formik.values.email} placeholder="Enter Email Address"
-                                            />
+                                            <input type="text" id="first_name" name="first_name" className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="first-name-error" placeholder="Presidents First Name" onChange={formik.handleChange} value={formik.values.first_name} />
                                             <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                                                 <svg className="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                                                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
                                                 </svg>
                                             </div>
                                         </div>
-                                        <p className="hidden text-xs text-red-600 mt-2" id="email-error">Please include a valid email address so we can get back to you</p>
+                                        <p className="hidden text-xs text-red-600 mt-2" id="first-name-error">Please include a valid first name so we can get back to you</p>
                                     </div>
 
                                     <div>
-                                        <div className="flex justify-between items-center">
-                                            <label htmlFor="password" className="block text-sm mb-2 text-gray-100">Password</label>
-                                            <a className="inline-flex items-center gap-x-1 text-sm text-themeThree decoration-2 hover:underline focus:outline-none focus:underline font-medium" href="../examples/html/recover-account.html">Forgot password?</a>
-                                        </div>
+                                        <label htmlFor="last_name" className="block text-sm mb-2 text-gray-100">Last Name</label>
                                         <div className="relative">
-                                            <input type="password" id="password" name="password" className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="password-error" onChange={formik.handleChange} value={formik.values.password} placeholder="Enter Password" />
+                                            <input type="text" id="last_name" name="last_name" className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="last-name-error" placeholder="Presidents Last Name" onChange={formik.handleChange} value={formik.values.last_name} />
                                             <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                                                 <svg className="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                                                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
                                                 </svg>
                                             </div>
                                         </div>
-                                        <p className="hidden text-xs text-red-600 mt-2" id="password-error">8+ characters required</p>
+                                        <p className="hidden text-xs text-red-600 mt-2" id="last-name-error">Please include a valid last name so we can get back to you</p>
                                     </div>
 
-                                    <div className="flex items-center">
-                                        <div className="flex">
-                                            <input id="remember-me" name="remember-me" type="checkbox" className="shrink-0 mt-0.5 border-gray-200 rounded text-themeThree focus:ring-themeThree" />
+                                    <div>
+                                        <label htmlFor="email" className="block text-sm mb-2 text-gray-100">Email Address</label>
+                                        <div className="relative">
+                                            <input type="email" id="email" name="email" className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="last-name-error" placeholder="Presidents Email Address" onChange={formik.handleChange} value={formik.values.email} />
+                                            <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
+                                                <svg className="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                                </svg>
+                                            </div>
                                         </div>
-                                        <div className="ms-3">
-                                            <label htmlFor="remember-me" className="text-sm text-gray-100">Remember me</label>
-                                        </div>
+                                        <p className="hidden text-xs text-red-600 mt-2" id="last-name-error">Please include a valid email so we can get back to you</p>
                                     </div>
 
-                                    <button type="submit" className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-themeThree hover:bg-themeTwo text-white hover:themeTwo focus:outline-none focus:themeTwo disabled:opacity-50 disabled:pointer-events-none">Sign in</button>
+                                    <div>
+                                        <label htmlFor="password" className="block text-sm mb-2 text-gray-100">Password</label>
+                                        <div className="relative">
+                                            <input type="password" id="password" name="password" className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="last-name-error" placeholder="Enter Password" onChange={formik.handleChange} value={formik.values.password} />
+                                            <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
+                                                <svg className="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <p className="hidden text-xs text-red-600 mt-2" id="last-name-error">Please include a valid password so we can get back to you</p>
+                                    </div>
+
+                                    <button type="submit" className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-themeThree text-white hover:bg-themeTwo focus:outline-none focus:bg-themeTwo disabled:opacity-50 disabled:pointer-events-none">Create Account</button>
                                 </div>
                             </form>
                         </div>
@@ -183,4 +187,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default MemberRegistration

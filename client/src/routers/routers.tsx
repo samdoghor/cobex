@@ -5,11 +5,18 @@ import Contact from "../pages/Contact";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import Cooperatives from "../pages/Cooperatives";
+import Dashboard from "../pages/(account)/Dashboard";
+import MemberRegistration from "../pages/auth/MemberRegistration";
+import NotFound from "../pages/NotFound";
 
 const routers = createBrowserRouter([
     {
         path: "/",
         element: <Index />,
+    },
+    {
+        path: "*",
+        element: <NotFound />,
     },
     {
         path: "/cooperatives",
@@ -30,6 +37,14 @@ const routers = createBrowserRouter([
     {
         path: "/auth/register",
         element: <Register />,
+    },
+    {
+        path: "/auth/register/member",
+        element: <MemberRegistration />,
+    },
+    {
+        path: "/dashboard",
+        element: <Dashboard />,
     },
 ]);
 

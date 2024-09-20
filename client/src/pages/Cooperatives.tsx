@@ -3,8 +3,12 @@ import Footer from "../components/Footer"
 import Header from "../components/Header"
 import SparklesText from "../components/magicui/sparkles-text"
 import ShinyButton from "../components/magicui/shiny-button"
+import { useOrganisation } from "../hooks/useOrganisation"
+import Loading from "../components/Loading"
 
 const Cooperatives = () => {
+    const { data, isLoading, isError } = useOrganisation();
+
     return (
         <>
             <Header />
@@ -25,7 +29,7 @@ const Cooperatives = () => {
                     <div className="mt-8 gap-3 flex justify-center">
                         <Link className="inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-themeThree to-themeTwo hover:from-themeTwo hover:to-themeThree border border-transparent text-white text-sm font-medium rounded-md focus:outline-none focus:from-themeTwo focus:to-themeThree py-3 px-4" to="/auth/register">
                             Create an Account
-                            <svg className="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+                            <svg className="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
                         </Link>
                     </div>
                 </div>
@@ -61,31 +65,39 @@ const Cooperatives = () => {
             </div>
 
             <div className="max-w-[85rem] md:px-40 sm:px-6 py-20 mx-auto bg-neutral-950 min-h-screen">
-                <div className="grid grid-cols-3 gap-4">
-                    <div className="bg-neutral-900 rounded-xl max-h-full">
-                        <div>
-                            <img className="object-cover rounded-t-xl" src="assets/images/society-1.jpg" alt="" />
-                        </div>
-                        <div className="p-4">
-                            <div className="grid grid-cols-3 gap-1 text-white py-4">
-                                <div className="flex items-center">
-                                    <img className="w-20 h-20 object-cover rounded-full" src="assets/images/society-1.jpg" alt="" />
+                {isLoading ? (
+                    <Loading />
+                ) : isError ? (
+                    <div>Error loading data.</div>
+                ) : (
+                    <div className="grid grid-cols-3 gap-4">
+                        {data?.data.map((organisation) => (
+                            <div key={organisation.id} className="bg-neutral-900 rounded-xl max-h-full">
+                                <div>
+                                    <img className="object-cover rounded-t-xl" src="assets/images/society-1.jpg" alt="" />
                                 </div>
-                                <div className="col-span-2 flex items-center text-left">
-                                    <p className="font-semibold text-base leading-normal">Oginigba Comprehensive Secondary School (Class 2010)</p>
+                                <div className="p-4">
+                                    <div className="grid grid-cols-3 gap-1 text-white py-4">
+                                        <div className="flex items-center">
+                                            <img className="w-20 h-20 object-cover rounded-full" src="assets/images/society-1.jpg" alt="" />
+                                        </div>
+                                        <div className="col-span-2 flex items-center text-left">
+                                            <p className="font-semibold text-base leading-normal">{organisation.full_name.toUpperCase()}</p>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4 border-t border-gray-700 pt-4">
+                                        <div className="flex items-center justify-center">
+                                            <ShinyButton text="Details" className="text-white text-center bg-themeThree hover:themeTwo py-2 px-4 rounded-xl" />
+                                        </div>
+                                        <div className="flex items-center justify-center">
+                                            <ShinyButton text="Message" className="text-white text-center bg-themeThree hover:themeTwo py-2 px-4 rounded-xl" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-2 gap-4 border-t border-gray-700 pt-4">
-                                <div className="flex items-center justify-center">
-                                    <ShinyButton text="Details" className="text-white text-center bg-themeThree hover:themeTwo py-2 px-4 rounded-xl" />
-                                </div>
-                                <div className="flex items-center justify-center">
-                                    <ShinyButton text="Message" className="text-white text-center bg-themeThree hover:themeTwo py-2 px-4 rounded-xl" />
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </div>
-                </div>
+                )}
             </div>
 
 

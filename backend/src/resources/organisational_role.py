@@ -41,26 +41,17 @@ class OrganisationalRoleResource(Resource):
         """ The function enables the creation of an organisational role"""
 
         try:
-            organisational_role = OrganisationalRoleModel.query.filter_by(
-                role=role).first()
+            organisational_roles = OrganisationalRoleModel.query.filter_by(
+                organisation=organisation).all()
 
-            organisational_roles = OrganisationalRoleModel.query.all()
-
-            if organisational_role:
-                return jsonify({
-                    'code': 409,
-                    'code_status': "conflict",
-                    'code_message': f"{role} already exist",
-                }), 409
-
-            if is_top_role is True:
-                is_member_role = False
+            if organisational_roles is not None:
                 for organisational_role in organisational_roles:
-                    while organisational_role.is_top_role is True:
+                    if organisational_role.is_top_role is True and organisational_role.role == "president":  # noqa
+                        is_member_role = False
                         return jsonify({
                             'code': 409,
                             'code_status': "conflict",
-                            'code_message': "highest role already exist",
+                            'code_message': "a president is already existing",
                         }), 409
 
             new_organisational_role = OrganisationalRoleModel(
