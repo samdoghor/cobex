@@ -11,7 +11,7 @@ interface ToastProps {
 const Toaster: React.FC<ToastProps> = ({ codeStatus, onDismiss, bgColor, toastIcon }) => {
     return (
         <>
-            <Toast className={`fixed top-5 right-5 ${bgColor} text-white flex items-center justify-between w-full max-w-xs`}>
+            <Toast className={`fixed top-5 right-5 ${bgColor} text-white flex items-center justify-between w-full max-w-xs z-[999]`}>
                 <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl text-white pe-2">
                     {toastIcon}
                 </div>

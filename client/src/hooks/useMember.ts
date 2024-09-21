@@ -20,6 +20,22 @@ export const useMemberLoginMutation = () => {
     });
 }
 
+export const useMemberLogoutMutation = () => {
+    return useMutation({
+        mutationFn: async () => {
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_PATH}${cobex_api.logout}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            return response.data;
+        }
+    });
+}
+
 export const useMemberRegistrationMutation = () => {
     return useMutation({
         mutationFn: async (registrationData: registrationData) => {
