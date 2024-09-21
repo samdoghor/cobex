@@ -8,6 +8,7 @@ import Cooperatives from "../pages/Cooperatives";
 import Dashboard from "../pages/(account)/Dashboard";
 import MemberRegistration from "../pages/auth/MemberRegistration";
 import NotFound from "../pages/NotFound";
+import Profile from "@/pages/(account)/Profile";
 
 const routers = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ const routers = createBrowserRouter([
     {
         path: "/dashboard",
         element: <Dashboard />,
+    },
+    {
+        path: "/dashboard/profile",
+        element: <Profile />,
     },
 ]);
 

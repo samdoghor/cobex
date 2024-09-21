@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Toaster from "../../components/Toaster";
-import { HiCheck, HiX } from "react-icons/hi";
+import { HiBadgeCheck, HiExclamation, HiXCircle } from "react-icons/hi";
 import Cookies from 'js-cookie';
 import { useOrganisationRegistrationMutation } from '../../hooks/useOrganisation';
 import { useOrganisationRoleRegistrationMutation } from '../../hooks/useOrganisationRole';
@@ -162,7 +162,7 @@ const Register = () => {
                     codeStatus={data?.code_status}
                     onDismiss={() => setShowToast(false)}
                     bgColor="bg-green-950"
-                    toastIcon={<HiCheck className="h-5 w-5 bg-green-700 rounded-lg" />}
+                    toastIcon={<HiBadgeCheck className="h-5 w-5 bg-green-700 rounded-lg" />}
                 />
             )}
             {errorShowToast && (
@@ -171,7 +171,7 @@ const Register = () => {
                     codeStatus={error?.response?.data?.code_message}
                     onDismiss={() => errorSetShowToast(false)}
                     bgColor="bg-red-950"
-                    toastIcon={<HiX className="h-5 w-5 bg-red-700 rounded-lg" />}
+                    toastIcon={<HiXCircle className="h-5 w-5 bg-red-700 rounded-lg" />}
                 />
             )}
             {unfinishRegShowToast && (
@@ -179,7 +179,7 @@ const Register = () => {
                     codeStatus="You have an unfinished registeration process, redirecting..."
                     onDismiss={() => setUnfinishRegShowToast(false)}
                     bgColor="bg-yellow-950"
-                    toastIcon={<HiX className="h-5 w-5 bg-yellow-700 rounded-lg" />}
+                    toastIcon={<HiExclamation className="h-5 w-5 bg-yellow-700 rounded-lg" />}
                 />
             )}
             {loginShowToast && (
@@ -187,7 +187,7 @@ const Register = () => {
                     codeStatus="You are logged in, redirecting..."
                     onDismiss={() => setLoginShowToast(false)}
                     bgColor="bg-yellow-950"
-                    toastIcon={<HiX className="h-5 w-5 bg-yellow-700 rounded-lg" />}
+                    toastIcon={<HiExclamation className="h-5 w-5 bg-yellow-700 rounded-lg" />}
                 />
             )}
             <Footer />

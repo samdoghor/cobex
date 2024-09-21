@@ -1,6 +1,30 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Cookies from 'js-cookie';
+import { HiExclamation } from "react-icons/hi";
+import Toaster from "./Toaster";
 
 const Header = () => {
+    const navigate = useNavigate();
+    const [errorlogoutShowToast, setErrorLogoutShowToast] = useState(false);
+    const [unfinishRegShowToast, setUnfinishRegShowToast] = useState(false);
+
+    useEffect(() => {
+
+        if (Cookies.get('Cobex-ORD') && Cookies.get('Cobex-ORRD')) {
+            setUnfinishRegShowToast(true);
+            setTimeout(() => {
+                navigate('/auth/register/member');
+            }, 3000);
+        }
+        if (Cookies.get('Cobex-UD') && Cookies.get('Cobex-SDI')) {
+            setErrorLogoutShowToast(true);
+            setTimeout(() => {
+                navigate('/dashboard');
+            }, 3000);
+        }
+    }, [navigate]);
+
     return (
         <>
             <header className="bg-neutral-900">
@@ -78,6 +102,22 @@ const Header = () => {
                     </div>
                 </div>
             </header>
+            {unfinishRegShowToast && (
+                <Toaster
+                    codeStatus="You have an unfinished registeration process, redirecting..."
+                    onDismiss={() => setUnfinishRegShowToast(false)}
+                    bgColor="bg-yellow-950"
+                    toastIcon={<HiExclamation className="h-5 w-5 bg-yellow-700 rounded-lg" />}
+                />
+            )}
+            {errorlogoutShowToast && (
+                <Toaster
+                    codeStatus="You are logged in, redirecting..."
+                    onDismiss={() => setErrorLogoutShowToast(false)}
+                    bgColor="bg-yellow-950"
+                    toastIcon={<HiExclamation className="h-5 w-5 bg-yellow-700 rounded-lg" />}
+                />
+            )}
         </>
     )
 }
