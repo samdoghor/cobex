@@ -47,7 +47,7 @@ class OrganisationModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     phone = db.Column(db.String(), nullable=True)
     website = db.Column(db.String(), nullable=True)
     description = db.Column(db.Text, nullable=True)
-    username = db.Column(db.String(), nullable=False, unique=True)
+    short_name = db.Column(db.String(), nullable=False, unique=True)
     verified = db.Column(db.Boolean(), nullable=False, default=False)
     setup_completed = db.Column(db.Boolean(), nullable=False, default=False)
     can_loan = db.Column(db.Boolean(), nullable=False, default=False)
