@@ -4,8 +4,6 @@ Keyword arguments:
 argument -- description
 Return: return_description
 """
-import secrets
-# from datetime import timedelta
 from flask import jsonify
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
@@ -33,15 +31,15 @@ class OrganisationResource(Resource):
                  help="The full name of the organisation."),
         Argument("email", location="json", required=True,
                  help="The email of the organisation."),
+        Argument("short_name", location="json", required=True,
+                 help="The short name of the organisation."),
     )
-    def create(full_name, email):
+    def create(full_name, email, short_name):
         """ The function enables the creation of an organisation"""
 
         try:
             organisation = OrganisationModel.query.filter_by(
                 email=email).first()
-
-            organisations = OrganisationModel.query.all()
 
             member = MemberModel.query.filter_by(
                 email=email).first()
@@ -60,16 +58,10 @@ class OrganisationResource(Resource):
                     'code_message': f"{email} was used for a member account",
                 }), 409
 
-            username = secrets.token_urlsafe(8)
-
-            for organisation in organisations:
-                while organisation.username == username:
-                    username = secrets.token_urlsafe(8)
-
             new_organisation = OrganisationModel(
                 full_name=full_name,
                 email=email,
-                username=username,
+                short_name=short_name,
             )
             new_organisation.save()
 
@@ -80,7 +72,7 @@ class OrganisationResource(Resource):
                     'id': new_organisation.id,
                     'full_name': new_organisation.full_name,
                     'email': new_organisation.email,
-                    'username': new_organisation.username,
+                    'short_name': new_organisation.short_name,
                     'is_hq': new_organisation.is_hq,
                     'is_incorporated': new_organisation.is_incorporated,
                     'verified': new_organisation.verified,
@@ -165,7 +157,7 @@ class OrganisationResource(Resource):
                     'phone': organisation.phone,
                     'website': organisation.website,
                     'description': organisation.description,
-                    'username': organisation.username,
+                    'short_name': organisation.short_name,
                     'verified': organisation.verified,
                     'setup_completed': organisation.setup_completed,
                     'can_loan': organisation.can_loan,
@@ -241,7 +233,7 @@ class OrganisationResource(Resource):
                     'phone': organisation.phone,
                     'website': organisation.website,
                     'description': organisation.description,
-                    'username': organisation.username,
+                    'short_name': organisation.short_name,
                     'verified': organisation.verified,
                     'setup_completed': organisation.setup_completed,
                     'can_loan': organisation.can_loan,
@@ -421,7 +413,7 @@ class OrganisationResource(Resource):
                     'phone': organisation.phone,
                     'website': organisation.website,
                     'description': organisation.description,
-                    'username': organisation.username,
+                    'short_name': organisation.short_name,
                     'verified': organisation.verified,
                     'setup_completed': organisation.setup_completed,
                     'can_loan': organisation.can_loan,

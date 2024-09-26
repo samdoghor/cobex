@@ -74,19 +74,19 @@ const InnerHeader = () => {
                         Dashboard
                     </Link>
                     <Link
-                        to="/organisation"
+                        to="/overview"
                         className="text-white hover:text-gray-300"
                     >
                         Organisation
                     </Link>
                     <Link
-                        to="#"
+                        to="/events"
                         className="text-white hover:text-gray-300"
                     >
                         Events
                     </Link>
                     <Link
-                        to="#"
+                        to="/levies"
                         className="text-white hover:text-gray-300"
                     >
                         Levies
@@ -124,19 +124,19 @@ const InnerHeader = () => {
                                 Dashboard
                             </Link>
                             <Link
-                                to="/organisation"
+                                to="/overview"
                                 className="text-white hover:text-gray-300"
                             >
                                 Organisation
                             </Link>
                             <Link
-                                to="#"
+                                to="/events"
                                 className="text-white hover:text-gray-300"
                             >
                                 Events
                             </Link>
                             <Link
-                                to="#"
+                                to="/levies"
                                 className="text-white hover:text-gray-300"
                             >
                                 Levies

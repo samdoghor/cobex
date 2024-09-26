@@ -91,3 +91,17 @@ export const useMemberUpdateMutation = () => {
         }
     });
 }
+
+const getAllMember = async (): Promise<Member> => {
+    const response = await axios.get(
+        `${import.meta.env.VITE_API_PATH}${cobex_api.members}`
+    );
+    return response.data
+}
+
+export const useAllMember = () => {
+    return useQuery({
+        queryKey: ["member"],
+        queryFn: getAllMember,
+    })
+}
