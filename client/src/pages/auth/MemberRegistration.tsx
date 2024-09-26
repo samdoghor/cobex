@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
 import Footer from "../../components/Footer";
-import Header from "../../components/Header";
+import HeaderTwo from "../../components/HeaderTwo";
 import Toaster from "../../components/Toaster";
 import { HiBadgeCheck, HiExclamation, HiXCircle } from "react-icons/hi";
 import { useMemberRegistrationMutation } from "../../hooks/useMember";
@@ -85,7 +85,7 @@ const MemberRegistration = () => {
     }, [isSuccess, isError, data, error, navigate]);
     return (
         <>
-            <Header />
+            <HeaderTwo />
             <div className="bg-stone-950 md:min-h-screen py-20 flex justify-center items-center">
                 <div className="border border-gray-200 rounded-xl shadow-sm md:w-[40%] w-96">
                     <div className="p-4 sm:p-7">
