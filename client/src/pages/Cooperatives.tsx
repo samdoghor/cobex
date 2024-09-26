@@ -82,15 +82,21 @@ const Cooperatives = () => {
                                             <img className="w-20 h-20 object-cover rounded-full" src="assets/images/society-1.jpg" alt="" />
                                         </div>
                                         <div className="col-span-2 flex items-center text-left">
-                                            <p className="font-semibold text-base leading-normal">{organisation.full_name.toUpperCase()}</p>
+                                            <p className="font-normal text-sm leading-normal">{organisation.full_name}</p>
                                         </div>
                                     </div>
+                                    <div className="text-white text-base text-left py-4">
+                                        <p>{organisation.short_name}</p>
+                                    </div>
+                                    {/* <div className="text-white text-base text-left py-4">
+                                        <p>{organisation.state}, {organisation.country} </p>
+                                    </div> */}
                                     <div className="grid grid-cols-2 gap-4 border-t border-gray-700 pt-4">
                                         <div className="flex items-center justify-center">
-                                            <ShinyButton text="Details" className="text-white text-center bg-themeThree hover:themeTwo py-2 px-4 rounded-xl" />
+                                            <ShinyButton text="Details" className="text-white text-center bg-themeTwo hover:bg-themeOne py-2 px-4 rounded-lg text-sm font-normal" />
                                         </div>
                                         <div className="flex items-center justify-center">
-                                            <ShinyButton text="Message" className="text-white text-center bg-themeThree hover:themeTwo py-2 px-4 rounded-xl" />
+                                            <ShinyButton text="Message" className="text-white text-center bg-themeTwo hover:bg-themeOne py-2 px-4 rounded-lg text-sm font-normal" />
                                         </div>
                                     </div>
                                 </div>

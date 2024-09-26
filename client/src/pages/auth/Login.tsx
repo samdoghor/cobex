@@ -57,6 +57,9 @@ const Login = () => {
             setTimeout(() => {
                 navigate('/dashboard');
             }, 3500);
+
+            const user_id = data?.data?.id;
+
             Cookies.set('Cobex-UD', data?.data?.access_token, {
                 // HttpOnly: true,
                 expires: 7,
@@ -71,6 +74,7 @@ const Login = () => {
                 sameSite: 'strict',
                 path: '/',
             });
+            localStorage.setItem('Cobex-EUI', user_id);
         }
 
         if (isError) {
@@ -84,8 +88,8 @@ const Login = () => {
     return (
         <>
             <Header />
-            <div className="bg-stone-950 min-h-screen py-20 flex justify-center items-center">
-                <div className="border border-gray-200 rounded-xl shadow-sm w-[40%]">
+            <div className="bg-stone-950 md:min-h-screen py-20 flex justify-center items-center">
+                <div className="border border-gray-200 rounded-xl shadow-sm md:w-[40%] w-96">
                     <div className="p-4 sm:p-7">
                         <div className="text-center">
                             <h1 className="block text-2xl font-bold text-gray-400">Sign in</h1>

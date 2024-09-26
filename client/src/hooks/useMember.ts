@@ -1,7 +1,15 @@
 import axios from "axios";
 import { cobex_api } from "../utils/api-endpoints";
-import { useMutation } from '@tanstack/react-query';
-import { LoginData, registrationData } from "../data/type";
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { LoginData, Member, registrationData, updateData } from "../data/type";
+
+const memberId = localStorage.getItem('Cobex-EUI');
+
+interface memberData {
+    code: number;
+    code_status: string;
+    data: Member;
+}
 
 export const useMemberLoginMutation = () => {
     return useMutation({
@@ -53,3 +61,33 @@ export const useMemberRegistrationMutation = () => {
     });
 }
 
+const getOneMember = async (): Promise<memberData> => {
+    const response = await axios.get(
+        `${import.meta.env.VITE_API_PATH}${cobex_api.members}/${memberId}`
+    );
+    return response.data
+}
+
+export const useMember = () => {
+    return useQuery({
+        queryKey: ["member"],
+        queryFn: getOneMember,
+    })
+}
+
+export const useMemberUpdateMutation = () => {
+    return useMutation({
+        mutationFn: async (updateData: updateData) => {
+            const response = await axios.put(
+                `${import.meta.env.VITE_API_PATH}${cobex_api.members}/${memberId}`,
+                updateData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            return response.data;
+        }
+    });
+}

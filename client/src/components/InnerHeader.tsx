@@ -46,6 +46,7 @@ const InnerHeader = () => {
             }, 3500);
             Cookies.remove('Cobex-SDI')
             Cookies.remove('Cobex-UD')
+            localStorage.removeItem('Cobex-EUI');
         }
 
         if (isError) {
@@ -67,13 +68,13 @@ const InnerHeader = () => {
                         </Link>
                     </div>
                     <Link
-                        to="#"
+                        to="/dashboard"
                         className="text-white hover:text-gray-300"
                     >
                         Dashboard
                     </Link>
                     <Link
-                        to="#"
+                        to="/organisation"
                         className="text-white hover:text-gray-300"
                     >
                         Organisation
@@ -83,6 +84,12 @@ const InnerHeader = () => {
                         className="text-white hover:text-gray-300"
                     >
                         Events
+                    </Link>
+                    <Link
+                        to="#"
+                        className="text-white hover:text-gray-300"
+                    >
+                        Levies
                     </Link>
                     <Link
                         to="#"
@@ -111,13 +118,13 @@ const InnerHeader = () => {
                                 </Link>
                             </div>
                             <Link
-                                to="#"
+                                to="/dashboard"
                                 className="text-white hover:text-gray-300"
                             >
                                 Dashboard
                             </Link>
                             <Link
-                                to="#"
+                                to="/organisation"
                                 className="text-white hover:text-gray-300"
                             >
                                 Organisation
@@ -127,6 +134,12 @@ const InnerHeader = () => {
                                 className="text-white hover:text-gray-300"
                             >
                                 Events
+                            </Link>
+                            <Link
+                                to="#"
+                                className="text-white hover:text-gray-300"
+                            >
+                                Levies
                             </Link>
                             <Link
                                 to="#"
@@ -157,8 +170,7 @@ const InnerHeader = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="bg-neutral-950 text-white hover:cursor-pointer">
                             <DropdownMenuLabel>Account Details</DropdownMenuLabel>
-                            <Link to="/dashboard/profile"><DropdownMenuItem className="bg-neutral-950 text-white hover:cursor-pointer">Profile</DropdownMenuItem></Link>
-                            <DropdownMenuItem className="bg-neutral-950 text-white hover:cursor-pointer">Settings</DropdownMenuItem>
+                            <Link to="/dashboard/settings/biodata"><DropdownMenuItem className="bg-neutral-950 text-white hover:cursor-pointer">Settings</DropdownMenuItem></Link>
                             <DropdownMenuItem className="bg-neutral-950 text-white hover:cursor-pointer">Support</DropdownMenuItem>
                             <DropdownMenuItem className="bg-neutral-950 text-white hover:cursor-pointer" onClick={() => mutate()}>Logout</DropdownMenuItem>
                         </DropdownMenuContent>

@@ -1,4 +1,4 @@
-import Header from "../components/Header"
+import HeaderTwo from "../components/HeaderTwo"
 import Footer from "../components/Footer"
 import { Link } from "react-router-dom"
 
@@ -6,7 +6,7 @@ const NotFound = () => {
 
     return (
         <>
-            <Header />
+            <HeaderTwo />
             <div className="w-full flex flex-col mx-auto size-full min-h-screen bg-neutral-950 text-white">
 
                 <main id="content">

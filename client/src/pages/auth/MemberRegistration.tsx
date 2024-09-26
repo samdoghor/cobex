@@ -18,11 +18,11 @@ const MemberRegistration = () => {
 
     useEffect(() => {
 
-        if (Cookies.get('Cobex-ORD') && Cookies.get('Cobex-ORRD')) {
+        if (!Cookies.get('Cobex-ORD') && !Cookies.get('Cobex-ORRD')) {
             setUnfinishRegShowToast(true);
             setTimeout(() => {
-                navigate('/auth/register/member');
-            }, 3000);
+                navigate('/auth/register');
+            }, 0);
         }
         if (Cookies.get('Cobex-UD') && Cookies.get('Cobex-SDI')) {
             setLoginShowToast(true);
@@ -86,8 +86,8 @@ const MemberRegistration = () => {
     return (
         <>
             <Header />
-            <div className="bg-stone-950 min-h-screen py-20 flex justify-center items-center">
-                <div className="border border-gray-200 rounded-xl shadow-sm w-[40%]">
+            <div className="bg-stone-950 md:min-h-screen py-20 flex justify-center items-center">
+                <div className="border border-gray-200 rounded-xl shadow-sm md:w-[40%] w-96">
                     <div className="p-4 sm:p-7">
                         <div className="mt-5">
                             <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6">President Data</div>
@@ -172,7 +172,7 @@ const MemberRegistration = () => {
             )}
             {unfinishRegShowToast && (
                 <Toaster
-                    codeStatus="You have an unfinished registeration process, redirecting..."
+                    codeStatus="You have no previous registeration process, redirecting..."
                     onDismiss={() => setUnfinishRegShowToast(false)}
                     bgColor="bg-yellow-950"
                     toastIcon={<HiExclamation className="h-5 w-5 bg-yellow-700 rounded-lg" />}

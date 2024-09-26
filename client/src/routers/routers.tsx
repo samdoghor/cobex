@@ -5,19 +5,19 @@ import Contact from "../pages/Contact";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import Cooperatives from "../pages/Cooperatives";
-import Dashboard from "../pages/(account)/Dashboard";
+import Dashboard from "../pages/account/Dashboard";
 import MemberRegistration from "../pages/auth/MemberRegistration";
 import NotFound from "../pages/NotFound";
-import Profile from "@/pages/(account)/Profile";
+import Profile from "@/pages/account/Profile";
+import Account from "@/pages/account/Account";
+import ContactInfo from "@/pages/account/ContactInfo";
+import Organisation from "@/pages/account/Organisation";
+import OrganisationSetting from "@/pages/account/OrganisationSetting";
 
 const routers = createBrowserRouter([
     {
         path: "/",
         element: <Index />,
-    },
-    {
-        path: "*",
-        element: <NotFound />,
     },
     {
         path: "/cooperatives",
@@ -48,8 +48,28 @@ const routers = createBrowserRouter([
         element: <Dashboard />,
     },
     {
-        path: "/dashboard/profile",
+        path: "/dashboard/settings/biodata",
         element: <Profile />,
+    },
+    {
+        path: "/dashboard/settings/account",
+        element: <Account />,
+    },
+    {
+        path: "/dashboard/settings/contact",
+        element: <ContactInfo />,
+    },
+    {
+        path: "/organisation",
+        element: <Organisation />,
+    },
+    {
+        path: "/organisation/settings",
+        element: <OrganisationSetting />,
+    },
+    {
+        path: "*",
+        element: <NotFound />,
     },
 ]);
 
