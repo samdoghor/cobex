@@ -13,6 +13,8 @@ import Account from "@/pages/account/Account";
 import ContactInfo from "@/pages/account/ContactInfo";
 import Organisation from "@/pages/account/Organisation";
 import OrganisationSetting from "@/pages/account/OrganisationSetting";
+import Events from "@/pages/account/Events";
+import Levies from "@/pages/account/Levies";
 
 const routers = createBrowserRouter([
     {
@@ -60,12 +62,24 @@ const routers = createBrowserRouter([
         element: <ContactInfo />,
     },
     {
-        path: "/organisation",
+        path: "/overview",
         element: <Organisation />,
+    },
+    {
+        path: "/organisation/details",
+        element: <OrganisationSetting />,
     },
     {
         path: "/organisation/settings",
         element: <OrganisationSetting />,
+    },
+    {
+        path: "/events",
+        element: <Events />,
+    },
+    {
+        path: "/levies",
+        element: <Levies />,
     },
     {
         path: "*",

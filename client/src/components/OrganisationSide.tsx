@@ -4,21 +4,19 @@ interface OrganisationSideProps {
     activeLink1?: string;
     activeLink2?: string;
     activeLink3?: string;
-    activeLink4?: string;
-    activeLink5?: string;
-    activeLink6?: string;
 }
 
-const OrganisationSide: React.FC<OrganisationSideProps> = ({ activeLink1, activeLink2 }) => {
+const OrganisationSide: React.FC<OrganisationSideProps> = ({ activeLink1, activeLink2, activeLink3 }) => {
     return (
         <>
             <div
                 className="grid gap-6 text-normal font-semibold text-muted-foreground" x-chunk="dashboard-04-chunk-0"
             >
-                <Link to="/organisation" className={`${activeLink1} text-primary`}>
+                <Link to="/overview" className={`${activeLink1} text-primary`}>
                     Organisation
                 </Link>
-                <Link to="/organisation/settings" className={`${activeLink2} text-primary`}>Settings</Link>
+                <Link to="/organisation/details" className={`${activeLink2} text-primary`}>Details</Link>
+                <Link to="/organisation/settings" className={`${activeLink3} text-primary`}>Settings</Link>
             </div >
         </>
     )
